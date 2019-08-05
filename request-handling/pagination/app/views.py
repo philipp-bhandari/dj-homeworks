@@ -12,7 +12,7 @@ def index(request):
 def bus_stations(request):
     try:
         num = int(request.GET.get('page'))
-    except TypeError:
+    except ValueError or TypeError:
         num = 1
 
     if num > 1:
@@ -28,15 +28,10 @@ def bus_stations(request):
     next_page = None
     rows_on_page = 10
 
-    with open(BUS_STATION_CSV, newline='', encoding='cp1251') as csvfile:
-        reader = csv.DictReader(csvfile)
+    with open(BUS_STATION_CSV, newline='', encoding='cp1251') as csv_file:
+        reader = list(csv.DictReader(csv_file))
         enum_reader = enumerate(reader)
-        page_count = 99999
-        # Не получается таким образом посчитать количество страниц, если раскомментировать строчку
-        # list_reader = list(reader), то последний цикл for не работает, я не могу понять почему.
-
-        # list_reader = list(reader)  # <---------------------------------------------- ?!
-        # page_count = math.ceil(len(list_reader) / rows_on_page)
+        page_count = math.ceil(len(reader) / rows_on_page)
 
         if num > page_count:
             return render_to_response('index.html', context={

@@ -14,10 +14,10 @@
         <p>
           Создан:
             {% if date == f.ctime.date %}
-            {{ f.ctime.date }} {{ f.ctime.time }}
-          {% else %}
-            <a href="{% url "file_list" date=f.ctime.date %}">{{ f.ctime.date }}</a> {{ f.ctime.time }}
-          {% endif %}
+                {{ f.ctime.date }} {{ f.ctime.time }}
+            {% else %}
+                <a href="{% url "file_list" date=f.ctime.date %}">{{ f.ctime.date }}</a> {{ f.ctime.time }}
+            {% endif %}
           <br>
           Изменен: {% if date == f.mtime.date %}
             {{ f.mtime.date }} {{ f.mtime.time }}
