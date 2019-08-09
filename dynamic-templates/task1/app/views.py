@@ -14,12 +14,11 @@ def inflation_view(request):
         for i, row in enumerate(reader):
             data_list = []
             for k, td in enumerate(row):
+                num = td
                 if row[k] is row[-1]:
                     color = 'gray'
-                    num = td
                 elif row[k] is row[0]:
                     color = None
-                    num = td
                 else:
                     try:
                         num = float(td)
@@ -34,8 +33,7 @@ def inflation_view(request):
                         else:
                             color = None
                     except:
-                        num = td
-
+                        color = None
                 data = {
                     'color': color,
                     'data': num
