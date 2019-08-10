@@ -25,9 +25,9 @@ def format_score(value, default):
         return default
     if value < -5:
         return 'всё плохо'
-    if -5 < value < 5:
+    if -5 <= value < 5:
         return 'нейтрально'
-    if value > 5:
+    if value >= 5:
         return 'хорошо'
 
 
@@ -45,4 +45,7 @@ def format_num_comments(value):
 @register.filter
 def format_selftext(value, count):
     words_list = value.split(' ')
-    return ' '.join(words_list[0:count]) + ' ... ' + ' '.join(words_list[-5:])
+    if 2 >= len(words_list) / (int(count) * 2) > 0:
+        return value
+    else:
+        return ' '.join(words_list[0:count]) + ' ... ' + ' '.join(words_list[-count:])
