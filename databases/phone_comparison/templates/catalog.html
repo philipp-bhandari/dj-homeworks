@@ -3,9 +3,27 @@
 
 {% block title %}Каталог{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="header">
-            <h1>Сравнение телефонов</h1>
-        </div>
+<div class="container">
+    <div class="header">
+        <h1>Сравнение телефонов</h1>
     </div>
+
+    <ul>
+        {% for field in field_names %}
+        <li>{{field}}:</li>
+        {% endfor %}
+    </ul>
+    {% for phone in phones %}
+    <ul>
+        <li>{{phone.model}}</li>
+        <li>{{phone.price}}</li>
+        <li>{{phone.os}}</li>
+        <li>{{phone.resolution}}</li>
+        <li>{{phone.matrix}}</li>
+        <li>{{phone.ram}}</li>
+        <li>{{phone.fm}}</li>
+        <li>{{phone.ir}}</li>
+    </ul>
+    {% endfor %}
+</div>
 {% endblock %}

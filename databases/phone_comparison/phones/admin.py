@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Phone, LG, Huawei
 
-# Register your models here.
+
+admin.site.register(Phone)
+admin.site.register(LG)
+admin.site.register(Huawei)
