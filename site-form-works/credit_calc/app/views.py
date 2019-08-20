@@ -1,27 +1,25 @@
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
 from .forms import CalcForm
 
 
-def calc_view(request):
-    template = "app/calc.html"
+class CalcView(TemplateView):
+    template_name = "app/calc.html"
 
-    form = CalcForm
-    context = {}
-
-    if request.GET.get('initial_fee') and request.GET.get('rate') and request.GET.get('months_count'):
+    def get(self, request, *args, **kwargs):
         form = CalcForm(request.GET)
+        result, common_result = None, None
+
         if form.is_valid():
-            fee = form.cleaned_data['initial_fee']
-            rate = form.cleaned_data['rate']
-            months = form.cleaned_data['months_count']
-            summ = fee + fee * (rate / 100)
-            for_month = summ / months
-            context['result'] = {
-                'summ': summ,
-                'month': for_month
-            }
+            data = form.cleaned_data
+            common_result = int(data['initial_fee'] + data['initial_fee'] * data['rate'] / 100)
+            result = int(common_result / data['months_count'])
 
-    context['form'] = form
+        context = {
+            'form': form,
+            'result': result,
+            'common_result': common_result
+        }
 
-    return render(request, template, context)
+        return render(request, self.template_name, context)
