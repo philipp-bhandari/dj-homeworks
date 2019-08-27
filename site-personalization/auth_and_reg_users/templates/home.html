@@ -4,9 +4,29 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="header"></div>
-            Привет, <b>гость</b>.<br>
-            Пожалуйста, <a href="/signup">зарегистрируйся</a> или <a href="/login">авторизуйся</a>!
+    <div class="header">
+        Привет, <b>{{ username }}</b>!<br>
     </div>
+    {% if is_logged %}
+        <div class="row mt-3">
+            <a class="btn btn-light" href="{% url 'signup' %}" role="button">
+                Зарегистрировать нового пользователя
+            </a>
+        </div>
+        <div class="row mt-3">
+            <a class="btn btn-light" href="{% url 'login' %}" role="button">
+                Авторизоваться под другим пользователем
+            </a>
+        </div>
+        <div class="row mt-3">
+            <a class="btn btn-light" href="{% url 'logout' %}" role="button">
+                Выйти
+            </a>
+        </div>
+    {% else %}
+        Пожалуйста,
+        <a href="{% url 'signup' %}">зарегистрируйся</a>
+        или
+        <a href="{% url 'login' %}">авторизуйся</a>!
+    {% endif %}
 {% endblock %}

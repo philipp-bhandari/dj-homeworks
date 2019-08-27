@@ -4,14 +4,25 @@
 {% block title %}Журнал{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="header">
-            <h1>Список статей</h1>
-        </div>
-        <div class="articles">
-            <h3>Статья 1</h3>
-            <h3>Статья 2</h3>
-            <h3>Статья 3</h3>
-        </div>
+    <div class="header">
+        <nav>
+            {% if is_logged %}
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+            {% endif %}
+        </nav>
+        <h1>Список статей</h1>
     </div>
+    <div class="articles">
+        {% for article in articles %}
+            <a href="{% url 'article' id=article.pk %}"><h3>{{ article.title }}</h3></a>
+        {% endfor %}
+    </div>
+    {% if is_logged and not has_subscription %}
+        <form method="post" action="{% url 'subscribe' %}">
+            {% csrf_token %}
+            <button class="btn mt-3">Подписаться на премиум публикации</button>
+        </form>
+    {% endif %}
 {% endblock %}
